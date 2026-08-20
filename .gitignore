@@ -23,3 +23,10 @@ UserSettings/
 CLAUDE.md
 .claude/
 install.cmd
+
+# Unity standalone (Windows) player output — must not be published to GitHub Pages
+Build/WebGL.exe
+Build/UnityCrashHandler64.exe
+Build/UnityPlayer.dll
+Build/WebGL_Data/
+Build/MonoBleedingEdge/

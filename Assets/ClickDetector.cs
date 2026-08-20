@@ -1,46 +1,13 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
+/// <summary>
+/// Planet picking is handled by UI buttons layered over the map image (see
+/// <see cref="SystemMapUI"/>), so no physics raycasting is needed any more.
+///
+/// This component is kept only so the existing GameObject in the scene does
+/// not report a missing script; it is safe to delete both this file and that
+/// component together.
+/// </summary>
 public class ClickDetector : MonoBehaviour {
     [SerializeField] private SystemMapUI systemMapUI;
-
-    void Update() {
-        if(Input.GetMouseButtonDown(0)) {
-            if(EventSystem.current != null && IsPointerOverUIElement())
-                return;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if(Physics.Raycast(ray, out hit)) {
-                SubLocationMarker moon = hit.collider.GetComponent<SubLocationMarker>();
-                if(moon != null) {
-                    GameManager.Instance.SelectLocation(moon.parentEnvironment);
-                    GameManager.Instance.SelectSubLocation(moon.subLocationName);
-                    return;
-                }
-
-                SpaceLocation location = hit.collider.GetComponent<SpaceLocation>();
-                if(location != null) {
-                    GameManager.Instance.SelectLocation(location.environment);
-
-                    if(systemMapUI != null) {
-                        systemMapUI.ExpandPlanet(location.environment);
-                    }
-                }
-            }
-        }
-    }
-
-    private bool IsPointerOverUIElement() {
-        UnityEngine.EventSystems.PointerEventData eventData = new UnityEngine.EventSystems.PointerEventData(EventSystem.current);
-        eventData.position = Input.mousePosition;
-        System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult> results = new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-        foreach(var r in results) {
-            if(r.gameObject.layer == LayerMask.NameToLayer("UI"))
-                return true;
-        }
-        return false;
-    }
 }

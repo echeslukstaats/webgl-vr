@@ -57,11 +57,11 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/New folder.loader.js";
+      var loaderUrl = buildUrl + "/Build.loader.js";
       var config = {
-        dataUrl: buildUrl + "/New folder.data",
-        frameworkUrl: buildUrl + "/New folder.framework.js",
-        codeUrl: buildUrl + "/New folder.wasm",
+        dataUrl: buildUrl + "/Build.data",
+        frameworkUrl: buildUrl + "/Build.framework.js",
+        codeUrl: buildUrl + "/Build.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "WebGL",
@@ -94,8 +94,10 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
+        // Fill the browser window. The in-game UI is authored against a 720-unit
+        // tall canvas, so a larger viewport renders it proportionally larger.
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
       }
 
       loadingBar.style.display = "block";
